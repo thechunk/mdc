@@ -64,9 +64,9 @@ angular.module('app.svc.compare', ['app.svc.merchant', 'app.svc.sourcer'])
 					}.bind(this))
 					.catch(function(err) {
 						this.running = false;
-						console.log(err);
 						$rootScope.$broadcast('app.svc.compare.compare.error', err);
 						$rootScope.$apply();
+						rej(err);
 					});
 			}.bind(this));
 		}

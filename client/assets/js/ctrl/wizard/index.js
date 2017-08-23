@@ -17,6 +17,10 @@ angular.module('app.ctrl.wizard.index', ['app.svc.compare'])
 		});
 
 		$scope.next = function() {
-			CompareSvc.compare();
+			CompareSvc.compare()
+				.catch(function(err) {
+					$scope.running = false;
+					alert(err);
+				});
 		}
 	}]);

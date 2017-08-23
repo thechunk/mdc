@@ -11527,7 +11527,8 @@ html, body {
 
 .amx-results-table {
   width: 100%;
-  border: none; }
+  border: none;
+  white-space: normal; }
 
 .amx-results-filters {
   padding: 24px; }
