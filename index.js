@@ -1,4 +1,5 @@
 var express = require('express');
+var path = require('path');
 var lookup = require('./server/ctrl/lookup');
 
 var SampleApp = function() {
@@ -21,7 +22,8 @@ var SampleApp = function() {
 
 	self.initializeServer = function() {
 		self.app.get('/api/v1/lookup/place', lookup.placesSearch);
-		self.app.use(express.static('client'));
+		self.app.use('/dashboard', express.static(path.join(__dirname, 'mockup/dashboard')));
+		self.app.use('/', express.static(path.join(__dirname, 'client')));
 	}
 
 	self.start = function() {

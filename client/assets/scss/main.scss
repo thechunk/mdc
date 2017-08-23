@@ -3,7 +3,97 @@ html, body {
 	margin: 0;
 	padding: 0;
 }
+
+.mdl-layout__header .mdl-layout-title {
+	line-height: 56px;
+}
+.mdl-layout__header .mdl-layout-title:before {
+	content: '';
+	width: 120px;
+	height: 56px;
+	margin-right: 15px;
+	display: block;
+	float: left;
+	background: url('/assets/img/amex_logo.png') no-repeat center center;
+	background-size: contain;
+}
+
+.amx-empty {
+	margin: 3em 0;
+	padding: 4em;
+	text-align: center;
+	> p {
+		margin: 1.2em 0;
+		font-size: 1.2em;
+	}
+	&:first-child {
+		border-right: 1px solid rgba(0, 0, 0, 0.2);
+	}
+	.material-icons {
+		display: block;
+		font-size: 7em;
+	}
+}
+.amx-wizard-index > .mdl-cell {
+	margin: 3em 0;
+	padding: 4em;
+	text-align: center;
+	> p {
+		margin: 1.2em 0;
+		font-size: 1.2em;
+	}
+	&:first-child {
+		border-right: 1px solid rgba(0, 0, 0, 0.2);
+	}
+	.material-icons {
+		display: block;
+		font-size: 7em;
+	}
+}
+
+.amx-wizard-processing {
+	padding: 8em 0;
+	text-align: left;
+	p {
+		font-size: 1.3em;
+	}
+}
+
 .amx-results-table {
 	width: 100%;
 	border: none;
+}
+.amx-results-filters {
+	padding: 24px;
+}
+.amx-result-table-details {
+	> a, > span {
+		display: block;
+	}
+}
+.amx-result-table-status {
+	font-size: 1.7em;
+}
+.amx-result.pass {
+	.amx-result-table-status { color: green; }
+}
+.amx-result.fail {
+	background: rgba(255, 0, 0, 0.1);
+	.amx-result-table-status { color: red; }
+}
+
+.amx-entry-table {
+	width: 100%;
+	border: none;
+	white-space: normal
+}
+.amx-entry-summary {
+	padding: 24px;
+}
+.amx-entry-item.fail {
+	.amx-entry-item-field > span{
+		padding: 4px;
+		background: rgba(255, 0, 0, 0.2);
+		border-bottom: 2px solid red;
+	}
 }

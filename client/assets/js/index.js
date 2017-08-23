@@ -24,4 +24,11 @@ angular.module('app.index', ['ngRoute', 'app.ctrl.wizard.index', 'app.ctrl.wizar
 			.otherwise({
 				redirectTo: '/wizard'
 			})
+	}])
+	.run(['$rootScope', '$timeout', function($rootScope, $timeout) {
+		$rootScope.$on('$viewContentLoaded', function() {
+			$timeout(function() {
+				componentHandler.upgradeAllRegistered();
+			}, 0);
+		})
 	}]);

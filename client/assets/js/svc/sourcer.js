@@ -3,7 +3,7 @@ var Promise = require('bluebird');
 var GoogleMapsLoader = require('google-maps');
 
 angular.module('app.svc.sourcer', [])
-	.service('SourcerSvc', ['$q', '$rootScope', function($q, $rootScope) {
+	.service('SourcerSvc', ['$q', '$rootScope', '$timeout', function($q, $rootScope, $timeout) {
 		this.scanning = false;
 		this.placesSvc = null;
 
@@ -12,20 +12,24 @@ angular.module('app.svc.sourcer', [])
 			if (results == null) results = [];
 			if (addedIds == null) addedIds = [];
 
-			this.placesSvc.textSearch({
-				query: queries.join(' '),
-			}, function(resp, err) {
-				queries.pop();
-				for (var i = 0; i < resp.length; i++) {
-					var result = resp[i];
-					if (addedIds.indexOf(result.place_id) === -1) {
-						addedIds.push(result.place_id);
-						results.push(result)
+			$timeout(function() {
+				this.placesSvc.textSearch({
+					query: queries.join(' ') + ', Australia', // FIXME: force AU
+					type: 'restaurant' // FIXME: force restaurant
+				}, function(resp, err) {
+					if (err === 'OVER_QUERY_LIMIT') return rej(err);
+					queries.pop();
+					for (var i = 0; i < resp.length; i++) {
+						var result = resp[i];
+						if (addedIds.indexOf(result.place_id) === -1) {
+							addedIds.push(result.place_id);
+							results.push(result)
+						}
 					}
-				}
-				if (err == 'OK' || (err == 'ZERO_RESULTS' && !!queries.length)) recursiveGooglePlaceSearch(queries, addedIds, results, res, rej);
-				else return rej(err);
-			});
+					if (err == 'OK' || (err == 'ZERO_RESULTS' && !!queries.length)) recursiveGooglePlaceSearch(queries, addedIds, results, res, rej);
+					else return rej(err);
+				});
+			}.bind(this), 2000)
 		}
 
 		function googlePlaceSearch(queries) {

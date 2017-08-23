@@ -1,3 +1,71 @@
-<p>
-	{{ merchantId}}
-</p>
+<div class="mdl-grid">
+	<div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
+	<div class="mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col amx-entry" ng-show="!emptyData">
+		<div class="amx-entry-summary">
+			<h3>{{ merchantData.merchant.name }}</h3>
+			<h6 ng-show="merchantData.detail.permanently_closed">Permanently closed</h6>
+		</div>
+		<table class="mdl-data-table mdl-js-data-table amx-entry-table">
+			<thead>
+				<tr>
+					<th></th>
+					<th class="mdl-data-table__cell--non-numeric">
+						American Express Data
+					</th>
+					<th class="mdl-data-table__cell--non-numeric">
+						External Data
+					</th>
+				</tr>
+			</thead>
+			<tr class="amx-entry-item" ng-class="merchantData.fields.name.pass ? 'pass' : 'fail'">
+				<td><i class="material-icons">domain</i></td>
+				<td class="mdl-data-table__cell--non-numeric amx-entry-item-field">
+					<span>
+						{{ merchantData.merchant.name }}
+					</span>
+				</td>
+				<td class="mdl-data-table__cell--non-numeric">
+					{{ merchantData.detail.name }}
+				</td>
+			</tr>
+			<tr class="amx-entry-item" ng-class="merchantData.fields.address.pass ? 'pass' : 'fail'">
+				<td><i class="material-icons">place</i></td>
+				<td class="mdl-data-table__cell--non-numeric amx-entry-item-field">
+					<span>
+						{{ merchantData.merchant.address }}
+					</span>
+				</td>
+				<td class="mdl-data-table__cell--non-numeric">
+					{{ merchantData.detail.formatted_address }}
+				</td>
+			</tr>
+			<tr class="amx-entry-item" ng-class="merchantData.fields.phone.pass ? 'pass' : 'fail'">
+				<td><i class="material-icons">call</i></td>
+				<td class="mdl-data-table__cell--non-numeric amx-entry-item-field">
+					<span>
+						{{ merchantData.merchant.phone }}
+					</span>
+				</td>
+				<td class="mdl-data-table__cell--non-numeric">
+					{{ merchantData.detail.formatted_phone_number }}
+				</td>
+			</tr>
+			<tr class="amx-entry-item" ng-class="!merchantData.merchant.website.length && !!merchantData.detail.website.length ? 'fail' : 'pass'">
+				<td><i class="material-icons">explore</i></td>
+				<td class="mdl-data-table__cell--non-numeric amx-entry-item-field">
+					<span>
+						{{ !!merchantData.merchant.website.length ? merchantData.merchant.website : '&ndash;' }}
+					</span>
+				</td>
+				<td class="mdl-data-table__cell--non-numeric">
+					{{ merchantData.detail.website }}
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="mdl-cell mdl-cell--8-col amx-empty" ng-show="emptyData">
+		<i class="material-icons">help</i>
+		<p>This merchant doesn't exist</p>
+		<a href="#!/wizard" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Go home</a>
+	</div>
+</div>

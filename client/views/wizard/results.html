@@ -1,39 +1,40 @@
 <div class="mdl-grid">
 	<div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
-	<div class="mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
+	<div class="mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col amx-results" ng-show="!emptyData">
+		<div class="amx-results-filters">
+			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-1">
+				<input type="checkbox" id="checkbox-1" class="mdl-checkbox__input" ng-model="showOnlyFailed">
+				<span class="mdl-checkbox__label">Only show mismatched entries</span>
+			</label>
+		</div>
 		<table class="mdl-data-table mdl-js-data-table amx-results-table">
-			<tbody>
-				<tr>
-					<td><h2>McDonalds</h2></td>
-					<td></td>
-				</tr>
-			</tbody>
 			<thead>
 				<tr>
+					<th></th>
 					<th class="mdl-data-table__cell--non-numeric">
-						American Express Data
+						Merchant Info
 					</th>
 					<th class="mdl-data-table__cell--non-numeric">
-						External Data
+						Data Status
 					</th>
 				</tr>
 			</thead>
-			<tr>
-				<td class="mdl-data-table__cell--non-numeric">
-					<a href="#!/wizard/results/1">Merchant</a>
+			<tr ng-repeat="result in compareData" class="amx-result" ng-class="resultPasses(result.fields)" ng-hide="showOnlyFailed && resultPasses(result.fields) === 'pass'">
+				<td><i class="material-icons">place</i></td>
+				<td class="mdl-data-table__cell--non-numeric amx-result-table-details">
+					<a ng-href="#!/wizard/results/{{ result.merchant.id }}"><strong>{{ result.merchant.name }}</strong></a>
+					<span>{{ result.merchant.address }}</span>
+					
 				</td>
-				<td class="mdl-data-table__cell--non-numeric">
-					Detail
-				</td>
-			</tr>
-			<tr>
-				<td class="mdl-data-table__cell--non-numeric">
-					<a href="#!/wizard/results/2">Merchant 2</a>
-				</td>
-				<td class="mdl-data-table__cell--non-numeric">
-					Detail
+				<td class="mdl-data-table__cell--non-numeric amx-result-table-status">
+					&#9679;
 				</td>
 			</tr>
 		</table>
+	</div>
+	<div class="mdl-cell mdl-cell--8-col amx-empty" ng-show="emptyData">
+		<i class="material-icons">help</i>
+		<p>No merchants found</p>
+		<a href="#!/wizard" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Go home</a>
 	</div>
 </div>

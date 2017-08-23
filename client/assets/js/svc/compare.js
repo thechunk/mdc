@@ -5,7 +5,7 @@ var sourcerSvc = require('./sourcer');
 var sessionSvc = require('./session');
 
 angular.module('app.svc.compare', ['app.svc.merchant', 'app.svc.sourcer'])
-	.service('CompareSvc', ['MerchantSvc', 'SourcerSvc', 'SessionSvc', '$rootScope', function(MerchantSvc, SourcerSvc, SessionSvc, $rootScope) {
+	.service('CompareSvc', ['MerchantSvc', 'SourcerSvc', 'SessionSvc', '$rootScope', '$timeout', function(MerchantSvc, SourcerSvc, SessionSvc, $rootScope, $timeout) {
 		this.running = false;
 		this.fields = [{
 			merchantField: 'name',
@@ -31,15 +31,21 @@ angular.module('app.svc.compare', ['app.svc.merchant', 'app.svc.sourcer'])
 					.then(function(data) {
 						var consolidatedData = data;
 						var promises = [];
+						var count = 0;
 						for (var merchantId in data) {
 							var merchant = data[merchantId].merchant;
 							var source = data[merchantId].source;
 							var drillSource = null;
 							promises.push(new Promise(function(resolve, reject) {
-								SourcerSvc.googlePlaceDetail(merchant, source[0].place_id)
-									.then(resolve)
-									.catch(reject);
-							}));
+								(function(m, s) {
+									$timeout(function() {
+										SourcerSvc.googlePlaceDetail(m, s[0].place_id)
+											.then(resolve)
+											.catch(reject);
+									}, 2000 * count);
+								}.bind(this))(merchant, source);
+							}.bind(this)));
+							count++;
 						}
 						Promise.all(promises)
 							.then(function(allData) {
@@ -50,19 +56,18 @@ angular.module('app.svc.compare', ['app.svc.merchant', 'app.svc.sourcer'])
 									consolidatedData[merchant.id].fields = this.matchFields(merchant, results);
 								}
 								this.running = false;
-								console.log(consolidatedData);
 								$rootScope.$broadcast('app.svc.compare.compare.success', consolidatedData);
 								$rootScope.$apply();
 								res(consolidatedData);
 							}.bind(this))
-							.catch(function(err) {
-								this.running = false;
-								$rootScope.$broadcast('app.svc.compare.compare.error', err);
-								$rootScope.$apply();
-								rej(err);
-							});
+							.catch(rej);
 					}.bind(this))
-					.catch(console.error);
+					.catch(function(err) {
+						this.running = false;
+						console.log(err);
+						$rootScope.$broadcast('app.svc.compare.compare.error', err);
+						$rootScope.$apply();
+					});
 			}.bind(this));
 		}
 
@@ -93,16 +98,17 @@ angular.module('app.svc.compare', ['app.svc.merchant', 'app.svc.sourcer'])
 						for (var i = 0; i < merchantData.length; i++) {
 							var merchant = merchantData[i];
 							promises.push(new Promise(function(resolve, reject) {
-								SourcerSvc.search(
-									null, merchant, merchant.name,
-									merchant.address1
-										+ ' ' + merchant.address2
-										+ ' ' + merchant.address3
-										+ ' ' + merchant.address4,
-									merchant.phone
-								)
-									.then(resolve)
-									.catch(reject);
+								(function(m) {
+									$timeout(function() {
+										SourcerSvc.search(
+											null, m, m.name,
+											m.address,
+											m.phone
+										)
+											.then(resolve)
+											.catch(reject);
+									}.bind(this), 2000 * i);
+								})(merchant);
 							}));
 						}
 						Promise.all(promises)

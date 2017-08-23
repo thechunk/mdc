@@ -1,11 +1,29 @@
 <div ng-show="!running">
-	<p>
-		Click 'Start' to begin cleansing the data in the database.
-		<button type="submit" ng-click="next()">Start</button>
-	</p>
+	<div class="mdl-grid amx-wizard-index">
+		<div class="mdl-cell mdl-cell--6-col">
+			<i class="material-icons">youtube_searched_for</i>
+			<p>
+				A <strong>full scan</strong> will perform matching <br>for all merchants in the database
+			</p>
+			<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit" ng-click="next()">Full Scan</button>
+		</div>
+		<div class="mdl-cell mdl-cell--6-col">
+			<i class="material-icons">store</i>
+			<p>
+				A <strong>new merchant scan</strong> performs <br>matching for new merchants
+			</p>
+			<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit">New Merchant Scan</button>
+		</div>
+	</div>
 </div>
 <div ng-show="running">
-	<p>
-		Processing
-	</p>
+	<div class="mdl-grid amx-wizard-processing">
+		<div class="mdl-cell mdl-cell--4-col"></div>
+		<div class="mdl-cell mdl-cell--4-col">
+			<p>
+				Processing merchant data&hellip;
+			</p>
+			<div class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+		</div>
+	</div>
 </div>
