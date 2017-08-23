@@ -8,6 +8,9 @@ var buffer = require('vinyl-buffer');
 var gutil = require('gulp-util');
 // var sourcemaps = require('gulp-sourcemaps');
 var assign = require('lodash.assign');
+var sass = require('gulp-sass');
+var concat = require('gulp-concat');
+var merge = require('merge-stream');
 
 // add custom browserify options here
 var customOpts = {
@@ -37,3 +40,18 @@ function bundle() {
     // .pipe(sourcemaps.write('./')) // writes .map file
     .pipe(gulp.dest('./client/assets/dist'));
 }
+
+gulp.task('sass', function() {
+	var scss = gulp.src(['./client/assets/scss/main.scss'])
+		.pipe(sass().on('error', sass.logError))
+		.pipe(concat('scss.scss'));
+	var css = gulp.src(['./node_modules/material-design-lite/material.css'])
+		.pipe(concat('css.css'));
+	var merged = merge(css, scss)
+		.pipe(concat('styles.css'))
+		.pipe(gulp.dest('./client/assets/dist'));
+});
+
+gulp.task('sass:watch', function () {
+	gulp.watch('./client/assets/scss/**/*.scss', ['sass']);
+});

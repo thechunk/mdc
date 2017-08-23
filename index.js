@@ -1,8 +1,9 @@
 var express = require('express');
+var lookup = require('./server/ctrl/lookup');
 
 var SampleApp = function() {
-    //  Scope.
-    var self = this;
+	//  Scope.
+	var self = this;
 	self.app = express();
 	self.setupVariables = function() {
 		//  Set the environment variables we need.
@@ -17,22 +18,26 @@ var SampleApp = function() {
 			self.ipaddress = "127.0.0.1";
 		};
 	};
-    self.initializeServer = function() {
+
+	self.initializeServer = function() {
+		self.app.get('/api/v1/lookup/place', lookup.placesSearch);
 		self.app.use(express.static('client'));
 	}
-    self.start = function() {
-        //  Start the app on the specific interface (and port).
-        self.app.listen(self.port, self.ipaddress, function() {
-            console.log('%s: Node server started on %s:%d ...',
-                        Date(Date.now() ), self.ipaddress, self.port);
-        });
-    };
-    self.initialize = function() {
-        self.setupVariables();
 
-        // Create the express server and routes.
-        self.initializeServer();
-    };
+	self.start = function() {
+		//  Start the app on the specific interface (and port).
+		self.app.listen(self.port, self.ipaddress, function() {
+			console.log('%s: Node server started on %s:%d ...',
+				Date(Date.now() ), self.ipaddress, self.port);
+		});
+	};
+
+	self.initialize = function() {
+		self.setupVariables();
+
+		// Create the express server and routes.
+		self.initializeServer();
+	};
 }
 
 var zapp = new SampleApp();

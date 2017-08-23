@@ -1,3 +1,4 @@
+require('material-design-lite/material')
 var angular = require('angular');
 var ngRoute = require('angular-route');
 var wizardIndexCtrl = require('./ctrl/wizard/index');
@@ -11,10 +12,6 @@ angular.module('app.index', ['ngRoute', 'app.ctrl.wizard.index', 'app.ctrl.wizar
 			.when('/wizard', {
 				templateUrl: '/views/wizard/index.html',
 				controller: 'WizardIndexCtrl'
-			})
-			.when('/wizard/status', {
-				templateUrl: '/views/wizard/status.html',
-				controller: 'WizardStatusCtrl'
 			})
 			.when('/wizard/results', {
 				templateUrl: '/views/wizard/results.html',

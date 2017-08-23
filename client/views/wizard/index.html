@@ -1,4 +1,11 @@
-<p>
-	Click 'Start' to begin cleansing the data in the database.
-	<button type="submit" ng-click="next()">Start</button>
-</p>
+<div ng-show="!running">
+	<p>
+		Click 'Start' to begin cleansing the data in the database.
+		<button type="submit" ng-click="next()">Start</button>
+	</p>
+</div>
+<div ng-show="running">
+	<p>
+		Processing
+	</p>
+</div>

@@ -1,0 +1,3 @@
+#!/bin/bash
+export GOOGLE_PLACES_API_KEY="***REMOVED***"
+export GOOGLE_PLACES_OUTPUT_FORMAT="json"
