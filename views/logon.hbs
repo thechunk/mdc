@@ -1,0 +1,158 @@
+<!doctype html>
+<HTML lang="en">
+<HEAD>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<TITLE>Node.js Sample Application - Logon</TITLE>
+	<STYLE>
+	section {
+		DISPLAY: block
+	}
+	BODY {
+		FONT-SIZE: 14px; FONT-FAMILY: "Helvetica Neue", Helvetica, "Liberation Sans", Arial,
+			sans-serif; COLOR: #404040; LINE-HEIGHT: 1.4
+	}
+	H1 {
+		COLOR: #000; MARGIN: 1.5em 0px 0.3em; LINE-HEIGHT: 1.38em
+	}
+	H2 {
+		COLOR: #000; MARGIN: 1.5em 0px 0.3em; LINE-HEIGHT: 1.38em
+	}
+	H3 {
+		COLOR: #000; MARGIN: 1.5em 0px 0.3em; LINE-HEIGHT: 1.38em
+	}
+	H1 {
+		MARGIN-BOTTOM: 0.5em; FONT-SIZE: 25px; BORDER-BOTTOM: #fff 1px solid; FONT-WEIGHT: 300
+	}
+	H1:after {
+		HEIGHT: 1px; CONTENT: ""; DISPLAY: block; WIDTH: 100%; BACKGROUND-COLOR: #ddd
+	}
+	H2 {
+		FONT-SIZE: 19px; FONT-WEIGHT: 400
+	}
+	H3 {
+		FONT-SIZE: 15px; FONT-WEIGHT: 400; MARGIN: 0px 0px 0.3em
+	}
+	P {
+		MARGIN: 0px 0px 2em
+	}	
+	form {
+		width: 300px; 
+		margin: 0 auto;
+	}
+
+	form.chgpw {
+		width: 350px; 
+		margin: 0 auto;
+	}
+	</STYLE>
+
+	<script>
+	function checkPassword() 
+	{
+		var password1 = document.getElementById('pw1');
+		var messageHolder = document.getElementById('validationMsg');
+		var submitBtn = document.getElementById('chgpwdsubmit');
+		var confirmField = document.getElementById('pw2');
+
+		// at least one number, one lowercase and one uppercase letter
+		// at least six characters that are letters, numbers or the underscore 
+		var re = /^(?=.*[0-9])(?=.*[@#$])[a-zA-Z0-9@#$]{8,50}$/;
+		
+		if (re.test(password1.value)){
+			password1.style.backgroundColor="#66cc66";
+			messageHolder.innerHTML = "";
+			messageHolder.style.color = "white";
+			// Let match check enable the button if the confirm field matches
+			confirmField.disabled = false;
+			confirmPass();
+		} else {
+			submitBtn.disabled = true;
+			confirmField.disabled = true;
+			password1.style.backgroundColor="#ff6666";
+			messageHolder.innerHTML = "Password does not meet requirements!";
+			messageHolder.style.color = "#ff6666";
+		}
+	}
+	
+	function confirmPass() {
+		var password1 = document.getElementById('pw1');
+		var password2 = document.getElementById('pw2');
+		var messageHolder = document.getElementById('validationMsg');
+		var submitBtn = document.getElementById('chgpwdsubmit');
+
+		if(password1.value == password2.value) {
+			submitBtn.disabled = false;
+			password2.style.backgroundColor="#66cc66";
+			messageHolder.innerHTML = "";
+			messageHolder.style.color = "white";
+		} else {
+			submitBtn.disabled = true;
+			password2.style.backgroundColor="#ff6666";
+			if (password2.value.length > 0) {
+				messageHolder.innerHTML = "Passwords Do Not Match!";
+			}
+			messageHolder.style.color = "#ff6666";
+		}
+	}
+	
+	</script>
+</HEAD>
+<BODY>
+	<BR /><BR /><BR /><BR />
+	<div id="logon" style="display: {{logonDisplay}}">
+		<p style="text-align: center;">Please log in to continue ...</p>
+		<FORM method="post" action="/login" >
+			<TABLE>
+				<TBODY>
+					<TR>
+						<TD><LABEL>User Name:</LABEL></TD>
+						<TD><INPUT name=username style="width: 200px;"></TD>
+					</TR>
+					<TR>
+						<TD><LABEL>Password:</LABEL></TD>
+						<TD><INPUT type=password name=password style="width: 200px;"></TD>
+					</TR>
+					<TR height=20/>
+					<TR>
+						<TD align="center" colspan="2"><INPUT type=submit value="Log in" name=loginsubmit style="width:100px"></TD>
+					</TR>
+				</TBODY>
+			</TABLE>
+			<input type="hidden" name="target" value="{{targetURL}}" />
+			<input type="hidden" name="op" value="login" />
+		</FORM>
+	</div>
+	
+	<div id="chgpw" style="display: {{chgPwDisplay}}">
+		<P style="text-align: center;">Please set the administrator password to continue.</P>
+		<FORM method="post" action="/login" class="chgpw" >
+			<TABLE>
+				<TBODY>
+					<TR>
+						<TD width=150><LABEL style="width: 150px;">New Password:</LABEL></TD>
+						<TD><INPUT type=password name="pw1" id="pw1" style="width: 180px;" onkeyup="checkPassword(); return false;"></TD>
+					</TR>
+					<TR>
+						<TD><LABEL>Confirm Password:</LABEL></TD>
+						<TD><INPUT type=password name="pw2" id="pw2" style="width: 180px;" onkeyup="confirmPass(); return false;"  disabled=true></TD>
+					</TR>
+					<TR>
+						<TD align="center" colspan="2" height=20><span id="validationMsg" name="confirmMsg" color="#ff6666" /></TD>
+					</TR>
+					<TR>
+						<TD align="center" colspan="2"><INPUT type=submit value="Set Password" name="chgpwdsubmit" id="chgpwdsubmit" style="width:100px" disabled=true ></TD>
+					</TR>
+					<TR height=20/>
+					<TR>
+						<TD align="center" colspan="2"><span>Passwords must be a minimum 8 characters long, 
+						include a minimum of one numeric and one special character (@,#,$) and begin with an alpha-numeric character</span></TD>
+					</TR>
+				</TBODY>
+			</TABLE>
+			<input type="hidden" name="target" value="{{targetURL}}" />
+			<input type="hidden" name="op" value="chnPw" />
+		</FORM>
+	</div>
+</BODY>
+</HTML>

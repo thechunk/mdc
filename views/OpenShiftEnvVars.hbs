@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="ie6 no-js" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7 no-js" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8 no-js" lang="en"> <![endif]-->
+<!--[if IE 9]>    <html class="ie9 no-js" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class='no-js' lang='en'>
+  <!--<![endif]-->
+  <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible'>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>OpenShift Environment Variables | OpenShift by Red Hat</title>
+	<style>
+table{
+	max-width:100%;
+	border-collapse:collapse;
+	border-spacing:0
+}
+
+.table{
+	width:100%;
+	margin-bottom:20px
+}
+
+.table th,.table td{
+	padding:8px;
+	line-height:20px;
+	text-align:left;
+	vertical-align:top;
+	border-top:1px solid #ddd
+}
+
+.table th{
+	font-weight:bold
+}
+
+.table thead th{
+	vertical-align:bottom
+}
+
+.table thead:first-child tr th,.table thead:first-child tr td{
+	border-top:0
+}
+
+.table tbody+tbody{
+	border-top:2px solid #ddd
+}
+
+.table-condensed th,.table-condensed td{
+	padding:4px 5px
+}
+
+.table-bordered{
+	border:1px solid #ddd;
+	border-collapse:separate;
+	*border-collapse:collapsed;
+	-webkit-border-radius:4px;
+	-moz-border-radius:4px;
+	border-radius:4px
+}
+
+.table-bordered th+th,.table-bordered td+td,.table-bordered th+td,.table-bordered td+th{
+	border-left:1px solid #ddd
+}
+
+.table-bordered thead:first-child tr:first-child th,.table-bordered tbody:first-child tr:first-child th,.table-bordered tbody:first-child tr:first-child td{
+	border-top:0
+}
+
+.table-bordered thead:first-child tr:first-child th:first-child,.table-bordered tbody:first-child tr:first-child td:first-child{
+	-webkit-border-radius:4px 0 0 0;
+	-moz-border-radius:4px 0 0 0;
+	border-radius:4px 0 0 0
+}
+
+.table-bordered thead:first-child tr:first-child th:last-child,.table-bordered tbody:first-child tr:first-child td:last-child{
+	-webkit-border-radius:0 4px 0 0;
+	-moz-border-radius:0 4px 0 0;
+	border-radius:0 4px 0 0
+}
+
+.table-bordered thead:last-child tr:last-child th:first-child,.table-bordered tbody:last-child tr:last-child td:first-child{
+	-webkit-border-radius:0 0 0 4px;
+	-moz-border-radius:0 0 0 4px;
+	border-radius:0 0 0 4px
+}
+
+.table-bordered thead:last-child tr:last-child th:last-child,.table-bordered tbody:last-child tr:last-child td:last-child{
+	-webkit-border-radius:0 0 4px 0;
+	-moz-border-radius:0 0 4px 0;
+	border-radius:0 0 4px 0
+}
+
+.table-striped tbody tr:nth-child(odd) td,.table-striped tbody tr:nth-child(odd) th{
+	background-color:#f9f9f9
+}
+
+.table tbody tr:hover td,.table tbody tr:hover th{
+	background-color:#f5f5f5
+}
+
+table .span1{
+	float:none;
+	width:39px;
+	margin-left:0
+}
+
+table .span2{
+	float:none;
+	width:119px;
+	margin-left:0
+}
+
+table .span3{
+	float:none;
+	width:199px;
+	margin-left:0
+}
+
+table .span4{
+	float:none;
+	width:279px;
+	margin-left:0
+}
+
+table .span5{
+	float:none;
+	width:359px;
+	margin-left:0
+}
+
+table .span6{
+	float:none;
+	width:439px;
+	margin-left:0
+}
+
+table .span7{
+	float:none;
+	width:519px;
+	margin-left:0
+}
+
+table .span8{
+	float:none;
+	width:599px;
+	margin-left:0
+}
+
+table .span9{
+	float:none;
+	width:679px;
+	margin-left:0
+}
+
+table .span10{
+	float:none;
+	width:759px;
+	margin-left:0
+}
+
+table .span11{
+	float:none;
+	width:839px;
+	margin-left:0
+}
+
+table .span12{
+	float:none;
+	width:919px;
+	margin-left:0
+}
+
+body{
+	margin:0;
+	font-family:"Open Sans","Helvetica Neue",Helvetica,"Liberation Sans",Arial,sans-serif;
+	font-size:14.5px;
+	line-height:20px;
+	color:#404040;
+	background-color:#fff
+	word-break:break-word;
+	word-wrap:break-word
+}
+
+body input{
+	word-break:normal;
+	word-wrap:normal
+}
+
+h1.ribbon{
+	background-color:#ea0011;
+	color:#fff;
+	display:inline-block;
+	padding:5px 25px 5px 0;
+	min-width:30%;
+	font-size:29px;
+	margin-bottom:25px;
+	text-shadow:-1px -1px 0 rgba(0,0,0,0.18);
+	position:relative;
+	box-shadow:1px 2px 2px rgba(0,0,0,0.5);
+	margin-left:-35px;
+	padding-left:35px
+}
+
+h1.ribbon::before{
+	content:'';
+	position:absolute;
+	width:0;
+	height:0;
+	left:0;
+	border-top:10px solid #a1000c;
+	bottom:-10px;
+	border-left:10px solid transparent
+}
+
+h1.ribbon else::after{
+	content:' ';
+	position:absolute;
+	width:10px;
+	height:1px;
+	left:0;
+	bottom:0;
+	box-shadow:1px 2px 2px rgba(0,0,0,0.5)
+}
+
+
+.community .column-content{
+	min-height:300px
+}
+
+.community .column-nav+.column-content{
+	min-height:700px
+}
+
+.lift{
+	margin-top:-250px
+}
+
+
+	</style>
+  </head>
+  <body class='not-front not-logged-in page-node node-type-page no-sidebars community'>
+  <div style="margin: 10px">
+  <div class="span9 span-flush-right">
+	  <h1 class="ribbon">iSandbox Environment Variables</h1>
+  <a name="Available_iSandbox_Environment_Variables"></a>
+  <h1> <span class="mw-headline"> Available iSandbox Environment Variables </span></h1>
+
+  <p>iSandbox has a few environment variables (provided by OpenShift) to make it easy for your to configure your application to run properly.
+The following tables show the variables, some examples of what the value would be, and what you might use them for.
+</p>
+
+<p>Depending on what extra cartridges you have enabled in your application, you may have more or less available variables.
+Also, values may be slightly different for similar types of cartridges (for instance, if you have a PostgreSQL database as opposed to MySQL).
+</p><p>If you'd like to see the exact values for your application, there are two ways you can see your available variables.
+</p>
+
+<ol><li> Add `export` to your .openshift/action_hooks/build file and push a new commit. You will be able to see the variables in your git output (they will all start with "remote: declare -x").
+</li><li> SSH into your application and run `env`
+</li></ol>
+
+<a name="Informational"></a><h2> <span class="mw-headline"> Informational </span></h2>
+<p>These variables provide some information about your application.
+</p>
+<table class="table table-striped table-bordered table-condensed">
+<tbody><tr><th> Variable Name </th><th> Current Value </th><th> Purpose</th></tr>
+<tr><td> OPENSHIFT_APP_DNS       </td><td>{{myAppDns}}</td><td> The fully-qualified domain name for your application</td></tr>
+<tr><td> OPENSHIFT_APP_NAME      </td><td>{{myAppName}}</td><td> Your application's name</td></tr>
+<tr><td> OPENSHIFT_APP_UUID      </td><td>{{myAppUUID}}</td><td> The UUID your application runs as (32 hex characters)</td></tr>
+<tr><td> OPENSHIFT_&lt;cartridge&gt;_IP   </td><td>{{myAppIP}}</td><td> The IP address your application will listen on</td></tr>
+<tr><td> OPENSHIFT_&lt;cartridge&gt;_PORT </td><td>{{myAppPort}}</td><td> The port your application will receive requests from</td></tr>
+</tbody>
+</table>
+
+<a name="Directories"></a><h2> <span class="mw-headline"> Directories </span></h2>
+<p>These directories are where your application lives on OpenShift.
+Please remember that the only directory that is guaranteed to never be deleted is your `OPENSHIFT_DATA_DIR`.
+</p>
+<table class="table table-striped table-bordered table-condensed">
+<tbody><tr>
+<th> Variable Name </th><th> Current Value </th><th> Purpose</th></tr>
+<tr><td> OPENSHIFT_HOMEDIR    </td><td>{{myHomeDir}}</td><td> The user home directory</td></tr>
+<tr><td> OPENSHIFT_DATA_DIR    </td><td>{{myDataDir}}</td><td> A persistent directory for your data</td></tr>
+<tr><td> OPENSHIFT_LOG_DIR     </td><td>{{myLogDir}}</td><td> Where your user-specific logs are stored.</td></tr>
+<tr><td> OPENSHIFT_NODEJS_LOG_DIR     </td><td>{{nodeLogDir}}</td><td> Where your cartridge-specific logs are stored.</td></tr>
+<tr><td>  OPENSHIFT_&lt;database&gt;_DB_LOG_DIR       </td><td>N/A</td><td> Where your database-specific logs are stored.</td></tr>
+<tr><td> OPENSHIFT_REPO_DIR    </td><td>{{myRepoDir}}</td><td> Repository containing the currently deployed version (of the application)</td></tr>
+<tr><td> OPENSHIFT_TMP_DIR     </td><td>{{myTmpDir}}</td><td> A temporary directory you can use. Even though the path is just `/tmp`, the magic of SELinux protects your data from other users</td></tr>
+</tbody>
+</table>
+
+<a name="Database"></a><h2> <span class="mw-headline"> Database </span></h2>
+<p>These variables pertain to your database (if you have one) and are used to connect your application to your database<sup><a href="#Notes" class="" title=""> 1</a></sup>. The exact variable names depend upon the database type; the value of <em>&lt;database&gt;</em> will be MONGODB, MYSQL, or POSTGRESQL as appropriate<sup><a href="#Notes" class="" title=""> 2</a></sup>.
+</p>
+<table class="table table-striped table-bordered table-condensed">
+<tbody><tr>
+<th> Variable Name </th><th> Current Value </th><th> Purpose</th></tr>
+<tr><td>  OPENSHIFT_&lt;database&gt;_DB_HOST      </td><td>N/A</td><td> The hostname or IP address to use to connect to your database</td></tr>
+<tr><td>  OPENSHIFT_&lt;database&gt;_DB_PORT      </td><td>N/A</td><td> The port your database server is listening on</td></tr>
+<tr><td>  OPENSHIFT_&lt;database&gt;_DB_USERNAME  </td><td>N/A</td><td> Your database administrative username</td></tr>
+<tr><td>  OPENSHIFT_&lt;database&gt;_DB_PASSWORD  </td><td>N/A</td><td> Your database administrative user's password</td></tr>
+<tr><td>  OPENSHIFT_&lt;database&gt;_DB_SOCKET    </td><td>N/A</td><td> A AF socket you can use to connect to your database <sup><a href="#Notes" class="" title=""> 3</a></sup></td></tr>
+<tr><td>  OPENSHIFT_&lt;database&gt;_DB_URL       </td><td>N/A</td><td> Database connection URL you can use to connect to your database</td></tr>
+</tbody>
+</table>
+
+<a name="Gear_Information"></a><h2> <span class="mw-headline"> Gear Information </span></h2>
+<p>These variables will be used if you have a scaling application.  
+</p>
+<table class="table table-striped table-bordered table-condensed">
+<tbody><tr>
+<th> Variable Name </th><th> Current Value </th><th> Purpose</th></tr>
+<tr><td>  OPENSHIFT_GEAR_DNS   </td><td>{{gearDns}}</td><td> The fully-qualified domain name for this gear</td></tr>
+<tr><td>  OPENSHIFT_GEAR_NAME  </td><td>{{gearName}}</td><td> This gear's name</td></tr>
+<tr><td>  OPENSHIFT_GEAR_UUID  </td><td>{{gearUUID}}</td><td> The UUID for this gear</td></tr>
+<tr><td>  OPENSHIFT_GEAR_MEMORY_MB  </td><td>{{gearMem}} MB</td><td> The memory allocated for this gear</td></tr>
+</tbody>
+</table>
+
+<a name="Notes"></a><h4> <span class="mw-headline"> Notes </span></h4>
+<ol><li> These connections are only available to your application internally, so you cannot connect from the outside.
+</li><li> With the exception of SOCKET, since Mongo only uses AF_INET sockets
+</li><li> Not available on scaled applications
+</li></ol>
+</div>
+</div>
+</body>
+</html>

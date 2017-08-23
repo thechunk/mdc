@@ -1,0 +1,15 @@
+#!/bin/bash
+
+echo "-------------------------------------------------------------------------------"
+echo "!!! Running pre_build shell script                                          !!!"
+echo ""
+
+echo " Remove any npm dependencies from the package.json file before running npm ... "
+echo "perl -0777 -i.with_deps -pe 'BEGIN{undef $/;} s/\"dependencies\":.*?{.*?}/\"dependencies\": { }/sm' ${OPENSHIFT_REPO_DIR}package.json"
+perl -0777 -i.with_deps -pe 'BEGIN{undef $/;} s/"dependencies":.*?{.*?}/"dependencies": { }/sm' ${OPENSHIFT_REPO_DIR}package.json
+echo "diff ${OPENSHIFT_REPO_DIR}package.json ${OPENSHIFT_REPO_DIR}package.json.with_deps"
+diff ${OPENSHIFT_REPO_DIR}package.json ${OPENSHIFT_REPO_DIR}package.json.with_deps
+
+echo ""
+echo "!!! Pre_build script complete ...                               !!!"
+echo "-------------------------------------------------------------------"
