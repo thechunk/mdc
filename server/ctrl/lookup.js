@@ -1,6 +1,6 @@
 var assert = require('assert');
 var Promise = require('bluebird');
-var googlePlaces = new require('googleplaces')('***REMOVED***', 'json');
+var googlePlaces = new require('googleplaces')('key', 'json');
 
 function recursiveGooglelaceSearch(queries, results, res, rej) {
 	assert(Array.isArray(queries));

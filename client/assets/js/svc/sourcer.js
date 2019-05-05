@@ -61,7 +61,7 @@ angular.module('app.svc.sourcer', [])
 				if (asyncStartedCb != null) asyncStartedCb();
 
 				GoogleMapsLoader.LIBRARIES = ['places'];
-				GoogleMapsLoader.KEY = '***REMOVED***';
+				GoogleMapsLoader.KEY = 'key';
 				GoogleMapsLoader.load(function(google) {
 					this.placesSvc = new google.maps.places.PlacesService(document.createElement('div'));
 					googlePlaceSearch([keyword, address, phone])
